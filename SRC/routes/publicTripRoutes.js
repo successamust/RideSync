@@ -5,7 +5,6 @@ import protect from '../middleware/protect.js';
 
 const router = express.Router();
 
-// public trip listing
 router.get('/', publicTripController.getTrips); 
 router.get('/user-trips',protect, publicTripController.getUserTrips);                
 router.get('/:id', publicTripController.getTripById);

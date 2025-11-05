@@ -26,7 +26,6 @@ export const getUser = async (req, res) => {
   
       const query = {};
   
-      //search by name or email
       if (search) {
         query.$or = [
           { name: { $regex: search, $options: "i" } },

@@ -1,4 +1,3 @@
-// controllers/publicTripController.js
 import asyncHandler from 'express-async-handler';
 import mongoose from 'mongoose';
 import Trip from '../models/tripsModel.js';
@@ -126,13 +125,11 @@ export const bookTrip = asyncHandler(async (req, res) => {
     if (!Number.isInteger(toBookCount) || toBookCount <= 0) { res.status(400); throw new Error('Invalid seats count'); }
     if (trip.availableSeats < toBookCount) { res.status(409); throw new Error('Not enough seats available'); }
 
-    // Check seat availability without reserving
     let seatsRequested = [];
     if (Array.isArray(seatNumbers) && seatNumbers.length) {
         const uniq = new Set(seatNumbers.map(String));
         if (uniq.size !== seatNumbers.length) { res.status(400); throw new Error('Duplicate seat numbers in request'); }
         
-        // Verify seats exist and are available
         const seatMap = new Map(trip.seats.map(s => [s.seatNumber, s.isAvailable]));
         const unavailableSeats = seatNumbers.filter(sn => !seatMap.has(sn) || seatMap.get(sn) === false);
         
@@ -145,7 +142,6 @@ export const bookTrip = asyncHandler(async (req, res) => {
     }
 
     if (!seatsRequested.length) {
-        // Find available seats without reserving them
         seatsRequested = trip.seats
             .filter(s => s.isAvailable)
             .slice(0, toBookCount)
@@ -195,7 +191,6 @@ export const bookTrip = asyncHandler(async (req, res) => {
             callbackUrl
         );
 
-        // Create booking WITHOUT reserving seats
         const booking = await Booking.create(bookingData);
 
         res.status(200).json({
@@ -402,7 +397,6 @@ export const getUserTrips = asyncHandler(async (req, res) => {
       sortOrder = 'desc'
     } = req.query;
   
-    // Check if user is authenticated
     if (!req.user || !req.user._id) {
       res.status(401);
       throw new Error('User not authenticated');
@@ -411,24 +405,20 @@ export const getUserTrips = asyncHandler(async (req, res) => {
     const userId = req.user._id;
     const skip = (Math.max(Number(page), 1) - 1) * Number(limit);
   
-    // Build query filter
     const filter = { user: userId };
   
-    // Filter by booking status
     if (status) {
       if (['pending', 'confirmed', 'cancelled', 'completed'].includes(status)) {
         filter.status = status;
       }
     }
   
-    // Filter by payment status
     if (req.query.paymentStatus) {
       if (['pending', 'paid', 'failed', 'refunded'].includes(req.query.paymentStatus)) {
         filter.paymentStatus = req.query.paymentStatus;
       }
     }
   
-    // Filter by date range (booking creation date)
     if (dateFrom || dateTo) {
       filter.createdAt = {};
       if (dateFrom) {
@@ -445,12 +435,11 @@ export const getUserTrips = asyncHandler(async (req, res) => {
           res.status(400);
           throw new Error('Invalid dateTo format');
         }
-        toDate.setHours(23, 59, 59, 999); // End of the day
+        toDate.setHours(23, 59, 59, 999);
         filter.createdAt.$lte = toDate;
       }
     }
   
-    // Sort configuration
     const sortOptions = {};
     const validSortFields = ['createdAt', 'departureDate', 'totalAmount', 'updatedAt'];
     const sortField = validSortFields.includes(sortBy) ? sortBy : 'createdAt';
@@ -470,18 +459,15 @@ export const getUserTrips = asyncHandler(async (req, res) => {
           .lean()
       ]);
   
-      // Map the response
       const userTrips = bookings.map(booking => {
         const trip = booking.trip || {};
         const company = booking.company || {};
         const vehicle = booking.vehicle || {};
         
-        // Parse route
         const routeParts = (trip.route || '').split('-');
         const from = routeParts[0]?.trim() || null;
         const to = routeParts[1]?.trim() || null;
   
-        // Format dates
         const departureDate = trip.departureDate ? trip.departureDate.toISOString().slice(0, 10) : null;
         const departureTime = trip.departureTime || null;
         const arrivalTime = trip.computedArrival ? trip.computedArrival.toISOString().slice(11, 16) : null;

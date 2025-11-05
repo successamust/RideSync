@@ -1,4 +1,3 @@
-// services/paymentService.js
 export const initializePayment = async (email, amount, reference, metadata = {}, callbackUrl = null) => {
     try {
       if (!process.env.PAYSTACK_SECRET_KEY) {
@@ -16,7 +15,6 @@ export const initializePayment = async (email, amount, reference, metadata = {},
         channels: ['card'],
       };
   
-      // Add redirect URL if provided
       if (callbackUrl) {
         requestBody.callback_url = callbackUrl;
       }

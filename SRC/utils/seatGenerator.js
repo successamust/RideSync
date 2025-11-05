@@ -14,7 +14,6 @@ export function generateSeatNumbers(seatCapacity, options = {}) {
     
     while (index < seatCapacity) {
       for (let c = 0; c < seatsPerRow && index < seatCapacity; c += 1) {
-        // Change from `${row}${cols[c]}` to `${cols[c]}${row}` (letter first)
         out.push(`${cols[c] || String(c+1)}${row}`);
         index += 1;
       }
