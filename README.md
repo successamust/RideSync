@@ -5,7 +5,7 @@ A comprehensive REST API for a transportation booking system that connects passe
 ## Base URL
 
 ```
-http://localhost:3050/v1
+https://smarttransit-api.onrender.com/v1
 ```
 
 All endpoints are prefixed with `/v1`.
