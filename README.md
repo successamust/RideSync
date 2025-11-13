@@ -5,7 +5,7 @@ A comprehensive REST API for a transportation booking system that connects passe
 ## Base URL
 
 ```
-https://-api.onrender.com/v1
+https://ridesync-z995.onrender.com/v1
 ```
 
 All endpoints are prefixed with `/v1`.
