@@ -42,6 +42,17 @@ app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok', uptime: process.uptime() });
 });
 
+// Root route handler
+app.get('/', (req, res) => {
+  res.status(200).json({ 
+    message: 'Welcome to RideSync API',
+    version: '1.0.0',
+    status: 'online',  
+    health: '/health',
+    documentation: 'https://docs.ridesync.com'
+  });
+});
+
 app.use('/v1', router);
 
 const PORT = process.env.PORT || 3050;
