@@ -8,6 +8,12 @@ import connectDB from './SRC/config/cloudinary.js';
 const app = express()
 dotenv.config();
 
+if (process.env.NODE_ENV === 'production' || process.env.TRUST_PROXY === 'true') {
+  app.set('trust proxy', 1); 
+} else {
+  app.set('trust proxy', false); 
+}
+
 // DIAGNOSTIC: log before attempting connect
 console.log('starting app — before connectDB()', { NODE_ENV: process.env.NODE_ENV, PORT: process.env.PORT });
 
