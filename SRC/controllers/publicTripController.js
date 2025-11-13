@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import Trip from '../models/tripsModel.js';
 import Booking from '../models/bookingModel.js';
 import { generateBookingRef } from '../utils/refGenerator.js';
-import sendEmail from '../utils/sendEmail.js';
+import {sendEmail} from '../utils/sendEmail.js';
 import { initializePayment, verifyPayment } from '../services/paymentService.js';
 
 export const getTrips = asyncHandler(async (req, res) => {

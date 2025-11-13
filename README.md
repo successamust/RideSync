@@ -1,11 +1,11 @@
-# SmartTransit API Documentation
+# RideSync API Documentation
 
 A comprehensive REST API for a transportation booking system that connects passengers with transport companies.
 
 ## Base URL
 
 ```
-https://smarttransit-api.onrender.com/v1
+https://-api.onrender.com/v1
 ```
 
 All endpoints are prefixed with `/v1`.

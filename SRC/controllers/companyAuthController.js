@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 import Company from '../models/companyModel.js';
-import sendEmail from '../utils/sendEmail.js';
+import {sendEmail} from '../utils/sendEmail.js';
 
 const signToken = (id, expiresIn = '1d') =>
   jwt.sign({ id, type: 'company' }, process.env.JWT_SECRET, { expiresIn });

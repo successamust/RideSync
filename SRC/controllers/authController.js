@@ -1,6 +1,6 @@
 import User from '../models/userModel.js';
 import jwt from 'jsonwebtoken';
-import sendEmail from '../utils/sendEmail.js';
+import {sendEmail} from '../utils/sendEmail.js';
 import crypto from 'crypto';
 
 const signToken = (userId, expiresIn = '1d') =>
@@ -28,7 +28,7 @@ export const registerUser = async (req, res) => {
       to: newUser.email,
       subject: 'Verify your account',
       html: `<p>Hello ${newUser.name},</p>
-             <p>Welcome to SmartTransit, Please click the link below to verify your email:</p>
+             <p>Welcome to RideSync, Please click the link below to verify your email:</p>
              <a href="${verificationUrl}">Verify Email</a>`
     });
 
@@ -70,17 +70,17 @@ export const verifyUserEmail = async (req, res) => {
     try {
       await sendEmail({
         to: user.email,
-        subject: 'Welcome to SmartTransit - Email Verified Successfully!',
+        subject: 'Welcome to RideSync - Email Verified Successfully!',
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-            <h2 style="color: #333;">Welcome to SmartTransit!</h2>
+            <h2 style="color: #333;">Welcome to RideSync!</h2>
             <p>Dear ${user.name || user.email},</p>
             <p>Your email has been successfully verified and your account is now active.</p>
-            <p>You can now log in and start using SmartTransit, book your rides, and much more.</p>
+            <p>You can now log in and start using RideSync, book your rides, and much more.</p>
             <br>
             <p>If you have any questions, feel free to contact our support team.</p>
             <br>
-            <p>Best regards,<br>SmartTransit Team</p>2
+            <p>Best regards,<br>RideSync Team</p>2
           </div>
         `
       });
