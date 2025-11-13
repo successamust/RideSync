@@ -1,7 +1,7 @@
 {
-  "name": "capstone-project",
+  "name": "ridesync-api",
   "version": "1.0.0",
-  "description": "a tansportation project server",
+  "description": "a transportation booking system server",
   "type": "module",
   "main": "app.js",
   "scripts": {
@@ -9,7 +9,7 @@
     "start": "node app.js",
     "dev": "nodemon app.js"
   },
-  "author": "shangshikmwa",
+  "author": "dkong",
   "license": "ISC",
   "dependencies": {
     "@sendgrid/mail": "^8.1.6",
